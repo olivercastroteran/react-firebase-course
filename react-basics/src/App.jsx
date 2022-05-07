@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import { EventsList, Modal, Title } from './components';
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
   const [showEvents, setShowEvents] = useState(true);
   const [events, setEvents] = useState([
     { title: "marios's birthday bash", id: 1 },
@@ -15,8 +17,16 @@ function App() {
     });
   };
 
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
+  const subtitle = 'All the latest events in mario kingdom';
+
   return (
     <div className="App">
+      <Title title="Mario Kingdom Events" subtitle={subtitle} />
+
       <div>
         {showEvents ? (
           <button onClick={() => setShowEvents(false)}>Hide Events</button>
@@ -24,15 +34,23 @@ function App() {
           <button onClick={() => setShowEvents(true)}>Show Events</button>
         )}
       </div>
-      {showEvents &&
-        events.map((event, i) => (
-          <div key={event.id}>
-            <h2>
-              {i} - {event.title}
-            </h2>
-            <button onClick={() => handleClick(event.id)}>Delete</button>
-          </div>
-        ))}
+
+      {showEvents && <EventsList events={events} handleClick={handleClick} />}
+
+      {showModal && (
+        <Modal handleClose={handleClose}>
+          <h2>Terms and Conditions</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi ab
+            maiores ad omnis fuga obcaecati necessitatibus quod esse optio vel
+            maiores ad omnis fuga obcaecati necessitatibus quod esse optio vel.
+          </p>
+        </Modal>
+      )}
+
+      <div>
+        <button onClick={() => setShowModal(true)}>Show Modal</button>
+      </div>
     </div>
   );
 }
