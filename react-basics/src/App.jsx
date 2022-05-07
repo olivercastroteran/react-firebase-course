@@ -38,12 +38,12 @@ function App() {
       {showEvents && <EventsList events={events} handleClick={handleClick} />}
 
       {showModal && (
-        <Modal handleClose={handleClose}>
+        <Modal handleClose={handleClose} isSalesModal={true}>
           <h2>Terms and Conditions</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi ab
             maiores ad omnis fuga obcaecati necessitatibus quod esse optio vel
-            maiores ad omnis fuga obcaecati necessitatibus quod esse optio vel.
+            maiores ad omnis fuga obcaecati necessitatibus quod esse.
           </p>
         </Modal>
       )}
