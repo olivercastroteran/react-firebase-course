@@ -4,7 +4,7 @@ import styles from './EventsList.module.css';
 const EventsList = ({ events, handleClick }) => {
   return (
     <div>
-      {events.map((event, i) => (
+      {events?.map((event, i) => (
         <div className={styles.card} key={event.id}>
           <h2>
             {i} - {event.title}

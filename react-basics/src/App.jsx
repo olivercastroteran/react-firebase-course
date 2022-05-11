@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { EventsList, Modal, Title } from './components';
+import { EventsList, Modal, NewEventForm, Title } from './components';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -18,6 +18,16 @@ function App() {
   };
 
   const handleClose = () => {
+    setShowModal(false);
+  };
+
+  const addNewEvent = (newEvent) => {
+    setEvents((prevEvents) => {
+      return {
+        ...prevEvents,
+        newEvent,
+      };
+    });
     setShowModal(false);
   };
 
@@ -39,17 +49,12 @@ function App() {
 
       {showModal && (
         <Modal handleClose={handleClose} isSalesModal={true}>
-          <h2>Terms and Conditions</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nisi ab
-            maiores ad omnis fuga obcaecati necessitatibus quod esse optio vel
-            maiores ad omnis fuga obcaecati necessitatibus quod esse.
-          </p>
+          <NewEventForm addNewEvent={addNewEvent} />
         </Modal>
       )}
 
       <div>
-        <button onClick={() => setShowModal(true)}>Show Modal</button>
+        <button onClick={() => setShowModal(true)}>Add New Event</button>
       </div>
     </div>
   );
