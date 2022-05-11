@@ -11,6 +11,7 @@ const NewEventForm = ({ addNewEvent }) => {
     setFormData({
       title: '',
       date: '',
+      location: 'manchester',
     });
   };
 
@@ -26,8 +27,8 @@ const NewEventForm = ({ addNewEvent }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Submited', formData);
-    addNewEvent({ ...formData, id: Math.floor(Math.random() * 100) });
+    addNewEvent({ ...formData, id: Math.floor(Math.random() * 1000) });
+    resetForm();
   };
 
   return (
@@ -51,11 +52,21 @@ const NewEventForm = ({ addNewEvent }) => {
           value={formData.date}
         />
       </label>
+      <label>
+        <samp>
+          <span>Event Location</span>
+          <select
+            name="location"
+            onChange={handleChange}
+            value={formData.location}
+          >
+            <option value="manchester">Manchester</option>
+            <option value="london">London</option>
+            <option value="cardiff">Cardiff</option>
+          </select>
+        </samp>
+      </label>
       <button>Submit</button>
-      <p>
-        title - {formData.title}, date - {formData.date}
-      </p>
-      <p onClick={resetForm}>Reset Form</p>
     </form>
   );
 };
