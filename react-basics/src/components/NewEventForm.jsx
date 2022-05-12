@@ -5,6 +5,7 @@ const NewEventForm = ({ addNewEvent }) => {
   const [formData, setFormData] = useState({
     title: '',
     date: '',
+    location: 'manchester',
   });
 
   const resetForm = () => {
