@@ -2,10 +2,13 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Create, Home, Recipe, Search } from './views';
 import { NavBar, ThemeSelector } from './components';
+import { useTheme } from './hooks/useTheme';
 
 function App() {
+  const { mode } = useTheme();
+
   return (
-    <div className="App">
+    <div className={`App ${mode}`}>
       <BrowserRouter>
         <NavBar />
         <ThemeSelector />
