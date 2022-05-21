@@ -1,8 +1,14 @@
 import { BookForm, BookList } from '../components';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { useCollection } from '../hooks/useCollection';
 
 export default function Home() {
-  const { documents: books, isPending, error } = useCollection('books');
+  const { user } = useAuthContext();
+  const {
+    documents: books,
+    isPending,
+    error,
+  } = useCollection('books', ['uid', '==', user.uid]);
 
   return (
     <div className="App">
