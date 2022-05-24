@@ -27,8 +27,8 @@ const useSignup = () => {
       // dispatch login action
       dispatch({ type: 'LOGIN', payload: res.user });
 
-      setIsPending(false);
       setError(null);
+      setIsPending(false);
     } catch (err) {
       console.log(err.message);
       setError(err.message);
