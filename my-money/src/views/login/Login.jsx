@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLogin } from '../../hooks';
 import styles from './Login.module.css';
 
@@ -7,7 +7,7 @@ const Login = () => {
     email: '',
     password: '',
   });
-  const { login, isPending, error } = useLogin();
+  const { login, isPending, error, cleanup } = useLogin();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,6 +30,14 @@ const Login = () => {
       };
     });
   };
+
+  useEffect(() => {
+    return () => {
+      if (isPending) {
+        cleanup();
+      }
+    };
+  });
 
   return (
     <form className={styles['login-form']} onSubmit={handleSubmit}>

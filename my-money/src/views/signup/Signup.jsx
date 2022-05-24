@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSignup } from '../../hooks';
 import styles from './Signup.module.css';
 
@@ -8,7 +8,7 @@ const Signup = () => {
     email: '',
     password: '',
   });
-  const { signup, isPending, error } = useSignup();
+  const { signup, isPending, error, cleanup } = useSignup();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -30,6 +30,14 @@ const Signup = () => {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    return () => {
+      if (isPending) {
+        cleanup();
+      }
+    };
+  });
 
   return (
     <form className={styles['signup-form']} onSubmit={handleSubmit}>

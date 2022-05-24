@@ -5,6 +5,7 @@ import { auth } from '../firebase/config';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 const useSignup = () => {
+  const [isCancelled, setIsCancelled] = useState(false);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const { dispatch } = useAuthContext();
@@ -27,16 +28,22 @@ const useSignup = () => {
       // dispatch login action
       dispatch({ type: 'LOGIN', payload: res.user });
 
-      setError(null);
-      setIsPending(false);
+      if (!isCancelled) {
+        setError(null);
+        setIsPending(false);
+      }
     } catch (err) {
-      console.log(err.message);
-      setError(err.message);
-      setIsPending(false);
+      if (!isCancelled) {
+        console.log(err.message);
+        setError(err.message);
+        setIsPending(false);
+      }
     }
   };
-
-  return { signup, isPending, error };
+  const cleanup = () => {
+    setIsCancelled(true);
+  };
+  return { signup, isPending, error, cleanup };
 };
 
 export default useSignup;

@@ -4,6 +4,7 @@ import { auth } from '../firebase/config';
 import { useAuthContext } from '../hooks';
 
 const useLogin = () => {
+  const [isCancelled, setIsCancelled] = useState(false);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
   const { dispatch } = useAuthContext();
@@ -17,16 +18,24 @@ const useLogin = () => {
       // dispatch login action
       dispatch({ type: 'LOGIN', payload: res.user });
       // update states
-      setIsPending(false);
-      setError(null);
+      if (!isCancelled) {
+        setIsPending(false);
+        setError(null);
+      }
     } catch (err) {
-      console.log(err.message);
-      setError(err.message);
-      setIsPending(false);
+      if (!isCancelled) {
+        console.log(err.message);
+        setError(err.message);
+        setIsPending(false);
+      }
     }
   };
 
-  return { login, isPending, error };
+  const cleanup = () => {
+    setIsCancelled(true);
+  };
+
+  return { login, isPending, error, cleanup };
 };
 
 export default useLogin;
