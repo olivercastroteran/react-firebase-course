@@ -67,9 +67,7 @@ const useFireStore = (c) => {
   // delete a document
   const deleteDocument = async (id) => {};
 
-  // useEffect(() => {
-  //   return () => setIsCancelled(true);
-  // }, []);
+  // cleanup when unmounted & pending process
   const cleanup = () => setIsCancelled(true);
 
   return { response, addDocument, deleteDocument, cleanup };
